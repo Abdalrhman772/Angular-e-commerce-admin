@@ -1,0 +1,128 @@
+<div class="mt-5">
+  <div class="" *ngIf="!loading">
+    <table class="table table-striped">
+      <thead>
+        <button
+          data-bs-toggle="modal"
+          data-bs-target="#addProduct"
+          class="btn btn-success"
+        >
+          Add Product
+        </button>
+        <tr>
+          <th scope="col"></th>
+          <th scope="col">Name</th>
+          <th scope="col">Category</th>
+          <th scope="col">Price</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let product of allProducts; let i = index">
+          <td>
+            <img src="{{ product.image }}" class="prod-img me-5" alt="" />
+          </td>
+          <td>{{ product.title }}</td>
+          <td>{{ product.category }}</td>
+          <td>{{ product.price }} &dollar;</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div
+    class="modal fade"
+    id="addProduct"
+    tabindex="-1"
+    aria-labelledby="exampleModalLabel"
+    aria-hidden="true"
+  >
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="exampleModalLabel">Add Product</h1>
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="modal"
+            aria-label="Close"
+          ></button>
+        </div>
+        <div class="modal-body">
+          <form [formGroup]="addProductForm">
+            <div class="d-flex gap-4">
+              <div class="mb-3 w-50">
+                <label for="title" class="form-label">title :</label>
+                <input
+                  formControlName="title"
+                  type="text"
+                  class="form-control"
+                  id="title"
+                  placeholder="title"
+                />
+              </div>
+              <div class="mb-3 w-50">
+                <label for="price" class="form-label">price :</label>
+                <input
+                  formControlName="price"
+                  type="number"
+                  class="form-control"
+                  id="price"
+                  placeholder="price"
+                />
+              </div>
+              <div class="mb-3 w-50">
+                <app-select
+                  [options]="categories"
+                  [title]="'Category'"
+                  (selectedValue)="getSelectedCategory($event)"
+                ></app-select>
+              </div>
+            </div>
+            <div class="d-flex gap-4">
+              <div class="upload">
+                <label for="formFile" class="form-label">image :</label>
+                <input
+                  (change)="getImgPath($event)"
+                  class="form-control mb-3"
+                  type="file"
+                  id="formFile"
+                />
+                <img
+                  *ngIf="imgUploaded"
+                  src="{{ imgSrc }}"
+                  class="img-upload"
+                  alt=""
+                />
+              </div>
+              <div class="flex-grow-1">
+                <label for="description" class="form-label"
+                  >Description :</label
+                >
+                <textarea
+                  formControlName="description"
+                  class="form-control"
+                  id="description"
+                  rows="3"
+                ></textarea>
+              </div>
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button
+            type="button"
+            class="btn btn-secondary"
+            data-bs-dismiss="modal"
+          >
+            Close
+          </button>
+          <button (click)="addProduct()" [disabled]="addProductForm.invalid" class="btn btn-success">Add Product</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="text-center w-100" *ngIf="loading">
+    <app-spinner></app-spinner>
+  </div>
+</div>

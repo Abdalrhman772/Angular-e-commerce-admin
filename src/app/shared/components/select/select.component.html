@@ -1,0 +1,5 @@
+<label for="" class="form-label"><i class="bi bi-filter-square-fill me-2"></i>{{title}}:</label>
+<select class="form-select input-colour" (change)="detectChange($event)">
+    <option value="All" selected>All</option>
+    <option  value="{{option}}" *ngFor="let option of options">{{option}}</option>
+</select>

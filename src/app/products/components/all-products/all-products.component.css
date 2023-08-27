@@ -1,0 +1,23 @@
+.prod-img {
+  width: 5rem;
+  height: 5rem;
+  object-fit: contain;
+}
+.modal {
+  --bs-modal-width: 50vw;
+}
+
+.upload {
+  width: 15.2rem;
+}
+
+textarea {
+  max-height: 100px;
+  min-height: 100px;
+}
+
+.img-upload {
+  width: 3rem;
+  height: 3rem;
+  object-fit: contain;
+}
