@@ -94,7 +94,7 @@ export class AllProductsComponent implements OnInit {
       const imgUrl = reader.result;
       if (imgUrl) {
         this.imgSrc = imgUrl;
-        this.addProductForm.get('image')?.setValue(imgUrl);
+        this.addProductForm.get('image')?.setValue(this.imgSrc);
         this.imgUploaded = true;
       } else {
         this.imgUploaded = false;
@@ -104,9 +104,21 @@ export class AllProductsComponent implements OnInit {
 
   addProduct() {
     const newProduct = this.addProductForm.value;
-    this.productsService.createProduct(newProduct).subscribe(res =>{
-      alert("product added successfully")
-    })
+    this.productsService.createProduct(newProduct).subscribe((res) => {
+      alert('product added successfully');
+    });
     console.log(this.addProductForm);
+  }
+
+  update(product: any) {
+    this.addProductForm.patchValue({
+      title: product.title,
+      price: product.price,
+      description: product.description,
+      image: product.image,
+      category: product.category,
+    });
+    this.imgSrc = product.image;
+    this.imgUploaded = true;
   }
 }

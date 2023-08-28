@@ -14,6 +14,7 @@
           <th scope="col">Name</th>
           <th scope="col">Category</th>
           <th scope="col">Price</th>
+          <th></th>
         </tr>
       </thead>
       <tbody>
@@ -24,6 +25,16 @@
           <td>{{ product.title }}</td>
           <td>{{ product.category }}</td>
           <td>{{ product.price }} &dollar;</td>
+          <td>
+            <button
+              data-bs-toggle="modal"
+              data-bs-target="#addProduct"
+              (click)="update(product)"
+              class="btn btn-warning"
+            >
+              Update
+            </button>
+          </td>
         </tr>
       </tbody>
     </table>
@@ -74,6 +85,8 @@
                 <app-select
                   [options]="categories"
                   [title]="'Category'"
+                  [all]="false"
+                  [select]="addProductForm.get('category')?.value"
                   (selectedValue)="getSelectedCategory($event)"
                 ></app-select>
               </div>
@@ -116,7 +129,13 @@
           >
             Close
           </button>
-          <button (click)="addProduct()" [disabled]="addProductForm.invalid" class="btn btn-success">Add Product</button>
+          <button
+            (click)="addProduct()"
+            [disabled]="addProductForm.invalid"
+            class="btn btn-success"
+          >
+            Add Product
+          </button>
         </div>
       </div>
     </div>
