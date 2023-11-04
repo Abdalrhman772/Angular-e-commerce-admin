@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { ProductsService } from '../../services/products.service';
-import { ActivatedRoute } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
@@ -10,7 +9,6 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 })
 export class AllProductsComponent implements OnInit {
   constructor(
-    private myRoute: ActivatedRoute,
     private productsService: ProductsService,
     private formBuilder: FormBuilder
   ) {}
@@ -26,7 +24,6 @@ export class AllProductsComponent implements OnInit {
 
   ngOnInit(): void {
     this.getAllProducts();
-    this.getCategories();
     this.addProductForm = this.formBuilder.group({
       title: ['', Validators.required],
       price: ['', Validators.required],
@@ -45,40 +42,16 @@ export class AllProductsComponent implements OnInit {
     this.productsService.GetAllProducts().subscribe({
       next: (data: any) => {
         this.allProducts = data;
-        this.products = data;
         this.loading = false;
-        console.log(this.allProducts);
       },
       error: (err: any) => {
         this.loading = false;
         alert(err);
-        console.log(err);
-      },
-    });
-  }
-
-  getProductsCategory(category: string) {
-    let res = this.allProducts.filter(
-      (item: any) => item.category === category
-    );
-    this.products = res;
-    console.log(res);
-  }
-
-  getCategories() {
-    this.productsService.GetAllCategories().subscribe({
-      next: (data: any) => {
-        this.categories = data;
-        console.log(this.categories);
-      },
-      error(err: any) {
-        console.log(err);
       },
     });
   }
 
   getProductDetails(productId: number) {
-    console.log(444);
     const selectedProduct = this.allProducts.filter(
       (item: any) => item.id == productId
     )[0];
